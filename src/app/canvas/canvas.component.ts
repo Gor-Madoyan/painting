@@ -27,6 +27,9 @@ export class CanvasComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProjects();
+    if(this.projectList.length === 0) {
+      this.storage.removeAll()
+    }
     console.log(this.projectList)
   }
 
@@ -57,7 +60,6 @@ export class CanvasComponent implements OnInit {
   resetColors(): void {
     this.circles = [];
     for (let i = 0; i < this.selectedSize; i++) {
-
       const objCircle = new Circle(i, this.newId(), '')
       this.circles.push(objCircle)
     }
@@ -69,8 +71,6 @@ export class CanvasComponent implements OnInit {
     }
     this.circles.forEach((item) => {
       item.color = this.currentColor;
-  
-      
     })
   }
 
@@ -89,11 +89,9 @@ export class CanvasComponent implements OnInit {
     const localStorageObj = new LocalStorageSaveObj(this.newId(), this.projectName, this.circles) 
     this.projectList.push(localStorageObj)
     this.storageSet()
+    this.projectName = ''
   }
 
-  jsonParse() {
-
-  }
 
   storageSet() {
     const projectsStr = JSON.stringify(this.projectList);
@@ -109,26 +107,31 @@ export class CanvasComponent implements OnInit {
 
   selectProject(project: IProject): void {
     this.circles = project.circles;
-  }
+    this.selectedSize = project.circles.length
+    console.log(project.circles.length);
+    
+  };
+
 
   onDelet(project:any, i :number) {
-// console.log(this.projectList);
+  const filteredProjectList = this.projectList.filter((val,i)=>{
+      return val.id !== project.id
+  });
+  this.projectList = filteredProjectList
 
-    const filteredProjectList = this.projectList.filter((val,i)=>{
-        return val.id !== project.id
-    });
-// console.log(filteredProjectList);
-// console.log(this.projectListName);
-// this.storage.remove(this.projectListName)
-const obj = this.storage.get(this.projectListName)
-if(obj) {
-  this.projectList = JSON.parse(obj);
-}
-    this.projectList = filteredProjectList
-    // this.projectList.splice(i,1)
-    // this.storage.removeAll()
-    // const projectsStr = JSON.stringify(this.projectList);
-    // this.storage.set(this.projectListName, projectsStr);
+
+  this.projectList.forEach((val,i)=>{
+    if(project.id === val.id) {
+      this.projectList.splice(i,1)
+      console.log(this.projectList);
+      
+    }
+  });
+  this.storage.set(this.projectListName, JSON.stringify(this.projectList));
+
+  if(this.projectList.length === 0) {
+    this.storage.removeAll()
+  }
     this.resetColors() 
   }
 
