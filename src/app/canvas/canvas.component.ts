@@ -113,7 +113,7 @@ export class CanvasComponent implements OnInit {
   };
 
 
-  onDelet(project:any, i :number) {
+  onDelet(project:any) {
   const filteredProjectList = this.projectList.filter((val,i)=>{
       return val.id !== project.id
   });
