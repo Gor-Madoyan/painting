@@ -6,10 +6,15 @@ import {Component, Input, OnInit} from '@angular/core';
   styleUrls: ['./circle.component.css']
 })
 export class CircleComponent implements OnInit {
-  @Input() set color(data: string) {
-    this._color = data ? data : '#ffffff';
-  }
+
   _color!: string;
+
+  @Input() set color(data: string) {
+    this._color = data ? data : '#fff';
+  };
+
+
+ 
 
   constructor() { }
 

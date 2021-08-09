@@ -21,5 +21,9 @@ export class LocalStorageService {
 
   removeAll(): void {
     localStorage.clear();
+  };
+
+  key(index:any) {
+    window.localStorage.key(index);
   }
 }
