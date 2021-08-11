@@ -1,44 +1,43 @@
 <div class="container">
-    <form [formGroup]='registrationForm'>
+    <form class="form" [formGroup]='registrationForm'>
 
-
-    <label>First Name</label>
-    <div class="forGroup">
-        <input [(ngModel)]='fName' type="text" formControlName='firstName' >
+        <div class="forGroup">
+        <label>First Name</label>
+        <input class="input" [(ngModel)]='fName' type="text" formControlName='firstName' >
         <div>
             <small *ngIf = 'firstName.invalid && firstName.touched'>First Name is required</small>
         </div>
     </div>
 
-    <label>Last Name</label>
     <div class="forGroup">
-        <input [(ngModel)]='lName' type="text"   formControlName='lastName' >
+        <label>Last Name</label>
+        <input class="input" [(ngModel)]='lName' type="text"   formControlName='lastName' >
         <div>
             <small *ngIf='lastName.invalid && lastName.touched'>Last Name is required</small>
         </div>
     </div>
 
-    <label>Email</label>
     <div class="forGroup">
-        <input [(ngModel)]='Email' type="email" formControlName='email'>
-        <div *ngIf="email.invalid && email.touched">
-            <small *ngIf="email.invalid && email.touched">email is required</small>
-            <small *ngIf='email.errors.pattern'>email must be valid</small>
+        <label>Email</label>
+        <input class="input" [(ngModel)]='Email' type="email" formControlName='email'>
+        <div  *ngIf="email.invalid && email.touched">
+            <small class="error" *ngIf="email.invalid && email.touched">email is required</small>
+            <small class="error" *ngIf='email.errors.pattern'>email must be valid</small>
         </div>
     </div>
 
-    <label>Password</label>
     <div class="forGroup">
-        <input [(ngModel)]='Password' type="password" formControlName='password' >
-        <div *ngIf='password.invalid && password.touched'>
+        <label>Password</label>
+        <input class="input" [(ngModel)]='Password' type="password" formControlName='password' >
+        <div  *ngIf='password.invalid && password.touched'>
             <small *ngIf="password.errors.required">Password is required</small>
             <small *ngIf="password.errors.minlength">Password Must be mor then 3 simbol</small>
         </div>
     </div>
 
-    <label>Confirm Password</label>
     <div class="forGroup"> 
-        <input type="password"  formControlName='confirmPassword'>
+        <label>Confirm Password</label>
+        <input class="input" type="password"  formControlName='confirmPassword'>
         <div *ngIf='confirmPassword.invalid && confirmPassword.touched'>
             <small *ngIf='confirmPassword.errors.required'>Confirm password is required</small>
             <small *ngIf="confirmPassword.errors.confirmValidator">Password and Confirm Password must match </small>

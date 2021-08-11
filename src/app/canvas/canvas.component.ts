@@ -27,10 +27,10 @@ export class CanvasComponent implements OnInit {
 
   ngOnInit(): void {
     this.getProjects();
-    if(this.projectList.length === 0) {
-      this.storage.removeAll()
-    }
-    console.log(this.projectList)
+    // if(this.projectList.length === 0) {
+    //   this.storage.removeAll()
+    // }
+    // console.log(this.projectList)
   }
 
 

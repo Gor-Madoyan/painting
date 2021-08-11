@@ -80,18 +80,20 @@ export class RegistrationComponent implements OnInit {
   creatAccounts() {
     this.newProject = new Canvas(this.storage, this.Email);
     this.uniqueProjectArr.push(this.newProject)
-  }
+  };
+
   setUniqueProject() {
     this.creatAccounts()
     this.storage.set('userAccounts', JSON.stringify(this.uniqueProjectArr))
-  }
+  };
 
   submitBtn() {
     this.creatObj();
     this.storageSetInfo()
 
     this.setUniqueProject()
-    console.log(this.uniqueProjectArr);
+    console.log(this.uniqueProjectArr, 'unique arr registration component');
+
   }
 
 

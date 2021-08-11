@@ -15,8 +15,6 @@ export class LoginComponent implements OnInit {
 
   @Output() newItemEvent  = new EventEmitter();
 
-
-
   arrList:Array<registrationList> = [];
   usersAccountsArr:any = []
   Password:any = '';
@@ -28,16 +26,14 @@ export class LoginComponent implements OnInit {
     this.newItemEvent.emit(this.passwordMatch)
   };
 
-
-
  
   ngOnInit(): void {
     this.loginSignUp = this.fb.group({
       login: ['', [Validators.required]],
       password: ['', [Validators.required]]
     })
-    this.storagetGetInfo();
-    this.enterUserAccount()
+      this.storagetGetInfo();
+      this.enterUserAccount()
   };
 
   get login() {
@@ -51,38 +47,45 @@ export class LoginComponent implements OnInit {
 
   storagetGetInfo() {
     const arr = this.storage.get('userInfo');
-    let arrPars = JSON.parse(`${arr}`)
-    this.arrList = arrPars
+    if(arr) {
+      this.arrList = JSON.parse(arr)
+      // console.log(this.arrList, 'storageGetInfo arrList');
+      
+    }
+  };
+  
+  enterUserAccount() {
+    let usersAccounts = this.storage.get('userAccounts');
+    if(usersAccounts) {
+      this.usersAccountsArr = JSON.parse(usersAccounts);
+      console.log(this.usersAccountsArr, 'enter usersArr')
+    }
   };
 
+
   compareLogin() {
-    // let canvas = new CanvasComponent(this.storage)
-    this.arrList.forEach(val=>{
-      if(this.Password == val.Password && this.Login === val.Email 
-        && this.Login === this.usersAccountsArr.email) {
+    // debugger
+    this.arrList.forEach((val, i)=>{
+      if(this.Password === val.Password &&  this.Login === this.usersAccountsArr[i].email) {
         console.log('this password found');
+        console.log(this.usersAccountsArr[i]);
         
-        // canvas.projectList = this.usersAccountsArr
+        // canvas.projectList = this.usersAccountsArr[i]
         this.passwordMatch = !true
         
+      } else {
+        return
       }
     })
   };
 
-
-  enterUserAccount() {
-    let usersAccounts = this.storage.get('userAccounts');
-    this.usersAccountsArr = JSON.parse(`${usersAccounts}`)
-    console.log(this.usersAccountsArr);
-    
-  }
-
   loginBtn() {
+    // debugger  
+    // this.enterUserAccount()
     this.compareLogin()
-    this.enterUserAccount()
-    this.addNewItem()
-
-    // console.log(this.arrList)
+    this.addNewItem()    
+    // console.log(this.arrList, 'btn arrList')
+    // this.storage.removeAll()
   }
 
 }
