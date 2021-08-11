@@ -1,6 +1,6 @@
 import { Component, OnInit, OnChanges} from '@angular/core';
 import { FormBuilder, Validators } from '@angular/forms';
-import { confirmValidator } from 'ConfirmPassCustomValidation/confirmPassCustom.Validator';
+import { confirmValidator } from 'src/ConfirmPassCustomValidation/confirmPassCustom.Validator';
 import { LocalStorageService } from '../services/storage.service';
 import { RegistrationObj } from './registrationClass';
 import { registrationList } from '../interfaces/registration.interface';
