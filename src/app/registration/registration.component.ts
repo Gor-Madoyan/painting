@@ -5,6 +5,7 @@ import { LocalStorageService } from '../services/storage.service';
 import { RegistrationObj } from './registrationClass';
 import { registrationList } from '../interfaces/registration.interface';
 import { Canvas } from '../canvas/canvas.component';
+import { Output, EventEmitter} from '@angular/core';
 
 
 @Component({
@@ -14,12 +15,15 @@ import { Canvas } from '../canvas/canvas.component';
 })
 export class RegistrationComponent implements OnInit {
 
+  @Output() newEventItem = new EventEmitter;
+
   constructor(private fb:FormBuilder, private storage: LocalStorageService) { }
   registrationForm!:any;
   fName:string = '' ;
   lName:string = '' ;
   Email:string = '' ;
   Password:any = '';
+  registrationDone:boolean = false
 
   objRegistration!:registrationList ;
   arrRegistration:Array<registrationList> = [];
@@ -27,6 +31,9 @@ export class RegistrationComponent implements OnInit {
   newProject:any = {};
   uniqueProjectArr:any = []
 
+  addnewItem() {
+    this.newEventItem.emit(this.registrationDone)
+  }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -89,11 +96,10 @@ export class RegistrationComponent implements OnInit {
 
   submitBtn() {
     this.creatObj();
-    this.storageSetInfo()
-
-    this.setUniqueProject()
+    this.storageSetInfo();
+    this.setUniqueProject();
+    this.addnewItem();
     console.log(this.uniqueProjectArr, 'unique arr registration component');
-
   }
 
 

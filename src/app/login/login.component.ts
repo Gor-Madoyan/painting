@@ -50,7 +50,6 @@ export class LoginComponent implements OnInit {
     if(arr) {
       this.arrList = JSON.parse(arr)
       // console.log(this.arrList, 'storageGetInfo arrList');
-      
     }
   };
   
@@ -58,30 +57,28 @@ export class LoginComponent implements OnInit {
     let usersAccounts = this.storage.get('userAccounts');
     if(usersAccounts) {
       this.usersAccountsArr = JSON.parse(usersAccounts);
-      console.log(this.usersAccountsArr, 'enter usersArr')
+      // console.log(this.usersAccountsArr, 'enter usersArr')
     }
   };
 
 
   compareLogin() {
     // debugger
+    this.enterUserAccount()
     this.arrList.forEach((val, i)=>{
-      if(this.Password === val.Password &&  this.Login === this.usersAccountsArr[i].email) {
+      if(this.Password === val.Password &&  this.Login === val.Email) {
         console.log('this password found');
         console.log(this.usersAccountsArr[i]);
         
         // canvas.projectList = this.usersAccountsArr[i]
         this.passwordMatch = !true
-        
-      } else {
-        return
-      }
+      } 
     })
   };
 
   loginBtn() {
     // debugger  
-    // this.enterUserAccount()
+    this.storagetGetInfo()
     this.compareLogin()
     this.addNewItem()    
     // console.log(this.arrList, 'btn arrList')

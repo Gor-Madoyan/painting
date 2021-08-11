@@ -5,7 +5,7 @@
         <label>First Name</label>
         <input class="input" [(ngModel)]='fName' type="text" formControlName='firstName' >
         <div>
-            <small *ngIf = 'firstName.invalid && firstName.touched'>First Name is required</small>
+            <small  class="error" *ngIf = 'firstName.invalid && firstName.touched'>First Name is required</small>
         </div>
     </div>
 
@@ -13,7 +13,7 @@
         <label>Last Name</label>
         <input class="input" [(ngModel)]='lName' type="text"   formControlName='lastName' >
         <div>
-            <small *ngIf='lastName.invalid && lastName.touched'>Last Name is required</small>
+            <small  class="error" *ngIf='lastName.invalid && lastName.touched'>Last Name is required</small>
         </div>
     </div>
 
@@ -30,8 +30,8 @@
         <label>Password</label>
         <input class="input" [(ngModel)]='Password' type="password" formControlName='password' >
         <div  *ngIf='password.invalid && password.touched'>
-            <small *ngIf="password.errors.required">Password is required</small>
-            <small *ngIf="password.errors.minlength">Password Must be mor then 3 simbol</small>
+            <small class="error" *ngIf="password.errors.required">Password is required</small>
+            <small class="error" *ngIf="password.errors.minlength">Password Must be mor then 3 simbol</small>
         </div>
     </div>
 
@@ -39,8 +39,8 @@
         <label>Confirm Password</label>
         <input class="input" type="password"  formControlName='confirmPassword'>
         <div *ngIf='confirmPassword.invalid && confirmPassword.touched'>
-            <small *ngIf='confirmPassword.errors.required'>Confirm password is required</small>
-            <small *ngIf="confirmPassword.errors.confirmValidator">Password and Confirm Password must match </small>
+            <small class="error" *ngIf='confirmPassword.errors.required'>Confirm password is required</small>
+            <small class="error" *ngIf="confirmPassword.errors.confirmValidator">Password and Confirm Password must match </small>
         </div>
     </div>
     <div>

@@ -1,10 +1,10 @@
 <div class="login-Container">
-    <form [formGroup] = 'loginSignUp'>
+    <form class="forGroup" [formGroup] = 'loginSignUp'>
         <label>Login</label>
         <div>
             <input  [(ngModel)]='Login' formControlName='login'  type="text"> 
-            <div *ngIf='login.invalid && login.touched'>
-                <small *ngIf='login.errors.required'>login is required</small>
+            <div  class="errors" *ngIf='login.invalid && login.touched'>
+                <small class="errors" *ngIf='login.errors.required'>login is required</small>
             </div>
         </div>
     
@@ -12,8 +12,8 @@
         <div>
             <input [(ngModel)]='Password'  formControlName='password' type="text"> 
             <div *ngIf='password.invalid && password.touched'>
-                <small *ngIf='password.errors.required'>password is required</small>
-                <small *ngIf='!passwordMatch'>Password doesn't match</small>
+                <small class="errors" *ngIf='password.errors.required'>password is required</small>
+                <small  class="errors" *ngIf='!passwordMatch'>Password doesn't match</small>
             </div>
         </div>
         <button (click)="loginBtn()"  class="login">LOGIN</button>

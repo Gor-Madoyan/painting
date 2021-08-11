@@ -1,18 +1,12 @@
 
-<!-- <div *ngIf = "matchLogin">
-    <app-registration></app-registration>
-    <app-login   (newItemEvent)='disapaierLoginPage($event)'></app-login>
-</div> -->
-
-
 <ng-template [ngIf]="matchLogin" [ngIfElse]="appearCanvas">
-    <app-registration></app-registration>
+    <app-registration (newEventItem)='disapaierRegistrationPage($event)'></app-registration>
     <app-login   (newItemEvent)='disapaierLoginPage($event)'></app-login>
 </ng-template>
 
 <ng-template #appearCanvas>
  <app-canvas ></app-canvas>
   </ng-template>
-<!-- <app-canvas ></app-canvas> -->
+
 
 
