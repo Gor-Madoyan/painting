@@ -1,0 +1,21 @@
+<div class="login-Container">
+    <form [formGroup] = 'loginSignUp'>
+        <label>Login</label>
+        <div>
+            <input  [(ngModel)]='Login' formControlName='login'  type="text"> 
+            <div *ngIf='login.invalid && login.touched'>
+                <small *ngIf='login.errors.required'>login is required</small>
+            </div>
+        </div>
+    
+        <label>Password</label>
+        <div>
+            <input [(ngModel)]='Password'  formControlName='password' type="text"> 
+            <div *ngIf='password.invalid && password.touched'>
+                <small *ngIf='password.errors.required'>password is required</small>
+                <small *ngIf='!passwordMatch'>Password doesn't match</small>
+            </div>
+        </div>
+        <button (click)="loginBtn()"  class="login">LOGIN</button>
+    </form>
+</div>

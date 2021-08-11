@@ -23,7 +23,7 @@ export class CanvasComponent implements OnInit {
 
   selectedSize: number = this.canvasSizes[0];
   currentColor: string = '#000';
-  constructor(private storage: LocalStorageService) { }
+  constructor(protected storage: LocalStorageService) { }
 
   ngOnInit(): void {
     this.getProjects();
@@ -32,6 +32,7 @@ export class CanvasComponent implements OnInit {
     }
     console.log(this.projectList)
   }
+
 
   onGenerateCircles(): void {
     this.resetColors()
@@ -82,12 +83,16 @@ export class CanvasComponent implements OnInit {
     return String(Date.now());
   }
 
+
+  creatObject() {
+    const localStorageObj = new LocalStorageSaveObj(this.newId(), this.projectName, this.circles) 
+    this.projectList.push(localStorageObj)
+  }
   onSave(): void {
     if (this.isEmpty(this.circles) || !this.projectName) {
       return;
     }
-    const localStorageObj = new LocalStorageSaveObj(this.newId(), this.projectName, this.circles) 
-    this.projectList.push(localStorageObj)
+    this.creatObject()
     this.storageSet()
     this.projectName = ''
   }
@@ -118,13 +123,10 @@ export class CanvasComponent implements OnInit {
       return val.id !== project.id
   });
   this.projectList = filteredProjectList
-
-
   this.projectList.forEach((val,i)=>{
     if(project.id === val.id) {
       this.projectList.splice(i,1)
       console.log(this.projectList);
-      
     }
   });
   this.storage.set(this.projectListName, JSON.stringify(this.projectList));
@@ -135,4 +137,12 @@ export class CanvasComponent implements OnInit {
     this.resetColors() 
   }
 
+}
+
+export class Canvas extends CanvasComponent {
+  email:string
+  constructor(storage:LocalStorageService, email:string) {
+    super(storage)
+    this.email = email
+  }
 }
