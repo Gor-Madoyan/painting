@@ -20,10 +20,10 @@ export class LoginComponent implements OnInit {
   Password:any = '';
   Login:string = ''
   loginSignUp!:any
-  passwordMatch:boolean = true
+  passwordMatch!:boolean 
 
-  addNewItem() {
-    this.newItemEvent.emit(this.passwordMatch)
+  addNewItem(passMatch:boolean) {
+    this.newItemEvent.emit(passMatch)
   };
 
  
@@ -68,11 +68,11 @@ export class LoginComponent implements OnInit {
     this.arrList.forEach((val, i)=>{
       if(this.Password === val.Password &&  this.Login === val.Email) {
         console.log('this password found');
-        console.log(this.usersAccountsArr[i]);
         
         // canvas.projectList = this.usersAccountsArr[i]
-        this.passwordMatch = !true
-      } 
+        // let passMatch = this.passwordMatch = false
+        this.addNewItem(false)    
+      }
     })
   };
 
@@ -80,7 +80,7 @@ export class LoginComponent implements OnInit {
     // debugger  
     this.storagetGetInfo()
     this.compareLogin()
-    this.addNewItem()    
+    
     // console.log(this.arrList, 'btn arrList')
     // this.storage.removeAll()
   }

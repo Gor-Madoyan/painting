@@ -15,7 +15,6 @@ import { Output, EventEmitter} from '@angular/core';
 })
 export class RegistrationComponent implements OnInit {
 
-  @Output() newEventItem = new EventEmitter;
 
   constructor(private fb:FormBuilder, private storage: LocalStorageService) { }
   registrationForm!:any;
@@ -23,17 +22,13 @@ export class RegistrationComponent implements OnInit {
   lName:string = '' ;
   Email:string = '' ;
   Password:any = '';
-  registrationDone:boolean = false
+
 
   objRegistration!:registrationList ;
   arrRegistration:Array<registrationList> = [];
-
   newProject:any = {};
-  uniqueProjectArr:any = []
+  // uniqueProjectArr:any = []
 
-  addnewItem() {
-    this.newEventItem.emit(this.registrationDone)
-  }
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
@@ -66,15 +61,20 @@ export class RegistrationComponent implements OnInit {
   get confirmPassword() {
     return this.registrationForm.get('confirmPassword')
   };
-  
+
   creatObj() {
-    const creatObj = new RegistrationObj(this.fName, this.lName, this.Email, this.Password)
-    this.arrRegistration.push(creatObj)
+    if(this.Email || this.Password) {
+      const creatObj = new RegistrationObj(this.fName, this.lName, this.Email, this.Password)
+      this.arrRegistration.push(creatObj)
+    }
   };
 
   storageSetInfo() {
-    const jsonObj = JSON.stringify(this.arrRegistration);
-    this.storage.set('userInfo', jsonObj)
+
+      if(this.Email || this.Password) {
+        const jsonObj = JSON.stringify(this.arrRegistration);
+        this.storage.set('userInfo', jsonObj)
+      }
   };
 
   storagetGetInfo() {
@@ -86,20 +86,27 @@ export class RegistrationComponent implements OnInit {
 
   creatAccounts() {
     this.newProject = new Canvas(this.storage, this.Email);
-    this.uniqueProjectArr.push(this.newProject)
+    // this.uniqueProjectArr.push(this.newProject)
   };
 
-  setUniqueProject() {
-    this.creatAccounts()
-    this.storage.set('userAccounts', JSON.stringify(this.uniqueProjectArr))
-  };
+  // setUniqueProject() {
+  //   this.creatAccounts()
+  //   this.storage.set('userAccounts', JSON.stringify(this.uniqueProjectArr))
+  // };
 
+
+  // clearFilds() {
+  //   this.fName = ' ' ;
+  //   this.lName = ' ' ;
+  //   this.Email = ' ' ;
+  //   this.Password = ' ';
+  // }
   submitBtn() {
     this.creatObj();
     this.storageSetInfo();
-    this.setUniqueProject();
-    this.addnewItem();
-    console.log(this.uniqueProjectArr, 'unique arr registration component');
+    // this.clearFilds()
+    // this.setUniqueProject();
+    // console.log(this.uniqueProjectArr, 'unique arr registration component');
   }
 
 

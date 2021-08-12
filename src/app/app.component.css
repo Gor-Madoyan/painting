@@ -1,0 +1,17 @@
+#registration{
+    background-color: rgb(95, 8, 146);
+    width: 200px;
+    height: 40px;
+    border-radius: 30px;
+    border:none;
+    font-size: 25px;
+    cursor: pointer;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+#registration:active{
+    background-color:rgb(163, 4, 184)
+}
+.button{
+    text-align: center;
+    margin:10px;
+}

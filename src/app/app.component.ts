@@ -9,15 +9,11 @@ import { Output, EventEmitter } from '@angular/core';
 
 export class AppComponent {
 matchLogin:boolean = true ;
-// registrationDone = true
 
 disapaierLoginPage(val:boolean) {
   this.matchLogin = val
 };
 
-disapaierRegistrationPage(val:boolean) {
-  this.matchLogin = val
-};
 
 
 }

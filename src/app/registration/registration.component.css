@@ -1,6 +1,7 @@
 .container{
     color:white;
-    width: 300px;
+    width: 400px;
+    padding:50px;
     height: auto;
     margin: auto;
     display: flex;
@@ -11,7 +12,9 @@
 
 .forGroup input{
     border: 0;
-    border-radius: 5px;
+    padding:5px 30px;
+    border-radius: 20px;
+    margin:5px;
 }
 
 .forGroup{
@@ -33,3 +36,12 @@ input.ng-invalid.ng-touched{
     margin-bottom: 20px;
 }
 
+
+.login{
+    margin-left: 10px;
+    border:none;
+    cursor: pointer;
+    border-radius: 20px;
+    padding:5px 25px;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif;
+}
