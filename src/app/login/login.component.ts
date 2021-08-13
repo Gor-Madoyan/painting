@@ -2,7 +2,8 @@ import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 import { LocalStorageService } from '../services/storage.service';
 import { registrationList } from '../interfaces/registration.interface';
 import { FormBuilder, Validators } from '@angular/forms';
-import { CanvasComponent } from '../canvas/canvas.component';
+import { Router } from '@angular/router';
+import { AuthService } from '../services/auth.sevice';
 
 @Component({
   selector: 'app-login',
@@ -11,9 +12,10 @@ import { CanvasComponent } from '../canvas/canvas.component';
 })
 export class LoginComponent implements OnInit {
 
-  constructor(private storage: LocalStorageService,private fb:FormBuilder ) { }
+  constructor(private storage: LocalStorageService,private fb:FormBuilder , 
+   private router:Router, private authService: AuthService
+    ) { }
 
-  @Output() newItemEvent  = new EventEmitter();
 
   arrList:Array<registrationList> = [];
   usersAccountsArr:any = []
@@ -22,9 +24,6 @@ export class LoginComponent implements OnInit {
   loginSignUp!:any
   passwordMatch!:boolean 
 
-  addNewItem(passMatch:boolean) {
-    this.newItemEvent.emit(passMatch)
-  };
 
  
   ngOnInit(): void {
@@ -63,26 +62,22 @@ export class LoginComponent implements OnInit {
 
 
   compareLogin() {
-    // debugger
     this.enterUserAccount()
-    this.arrList.forEach((val, i)=>{
+    const currentUser = this.arrList.filter((val, i)=>{
       if(this.Password === val.Password &&  this.Login === val.Email) {
         console.log('this password found');
-        
-        // canvas.projectList = this.usersAccountsArr[i]
-        // let passMatch = this.passwordMatch = false
-        this.addNewItem(false)    
+        this.router.navigateByUrl('/canvas') 
       }
-    })
+
+      return (this.Password === val.Password &&  this.Login === val.Email)
+    });
+
+    this.authService.setUser(currentUser)
   };
 
   loginBtn() {
-    // debugger  
     this.storagetGetInfo()
     this.compareLogin()
-    
-    // console.log(this.arrList, 'btn arrList')
-    // this.storage.removeAll()
   }
 
 }

@@ -12,12 +12,15 @@ constructor (id:number,uid:string, color:string) {
 
 
 export class LocalStorageSaveObj{
-    id: string
-    name: string
-    circles: ICircle[]
-    constructor(id:string, name:string, circles:ICircle[]) {
+    id: string;
+    name: string;
+    circles: ICircle[];
+    email: string;
+    
+    constructor(id:string, name:string, circles:ICircle[], email:string) {
         this.id = id;
         this.name = name; 
         this.circles = circles
+        this.email = email
     }
 }

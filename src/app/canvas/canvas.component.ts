@@ -5,6 +5,7 @@ import {LocalStorageService} from "../services/storage.service";
 import {IProject} from "../interfaces/project.interface";
 import { Circle } from './circleClass/circle';
 import { LocalStorageSaveObj } from './circleClass/circle';
+import { AuthService } from '../services/auth.sevice';
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -23,14 +24,11 @@ export class CanvasComponent implements OnInit {
 
   selectedSize: number = this.canvasSizes[0];
   currentColor: string = '#000';
-  constructor(protected storage: LocalStorageService) { }
+
+  constructor(protected storage: LocalStorageService, private authService: AuthService) { }
 
   ngOnInit(): void {
     this.getProjects();
-    // if(this.projectList.length === 0) {
-    //   this.storage.removeAll()
-    // }
-    // console.log(this.projectList)
   }
 
 
@@ -84,15 +82,18 @@ export class CanvasComponent implements OnInit {
   }
 
 
-  creatObject() {
-    const localStorageObj = new LocalStorageSaveObj(this.newId(), this.projectName, this.circles) 
+  creatObject(email: any) {
+    const localStorageObj = new LocalStorageSaveObj(this.newId(), this.projectName, this.circles, email);
+    debugger 
     this.projectList.push(localStorageObj)
   }
   onSave(): void {
     if (this.isEmpty(this.circles) || !this.projectName) {
       return;
     }
-    this.creatObject()
+
+    const user = this.authService.getUser();
+    this.creatObject(user.Email)
     this.storageSet()
     this.projectName = ''
   }
@@ -117,32 +118,27 @@ export class CanvasComponent implements OnInit {
     
   };
 
-
   onDelet(project:any) {
   const filteredProjectList = this.projectList.filter((val,i)=>{
       return val.id !== project.id
   });
   this.projectList = filteredProjectList
-  this.projectList.forEach((val,i)=>{
-    if(project.id === val.id) {
-      this.projectList.splice(i,1)
-      console.log(this.projectList);
-    }
-  });
   this.storage.set(this.projectListName, JSON.stringify(this.projectList));
 
   if(this.projectList.length === 0) {
-    this.storage.removeAll()
+    this.storage.remove('circlesProject')
   }
     this.resetColors() 
   }
 
+
+
 }
 
-export class Canvas extends CanvasComponent {
-  email:string
-  constructor(storage:LocalStorageService, email:string) {
-    super(storage)
-    this.email = email
-  }
-}
+// export class Canvas extends CanvasComponent {
+//   email:string
+//   constructor(storage:LocalStorageService, email:string) {
+//     super(storage)
+//     this.email = email
+//   }
+// }

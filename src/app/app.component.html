@@ -1,12 +1,6 @@
-
-<ng-template [ngIf]="matchLogin" [ngIfElse]="appearCanvas">
-        <app-registration ></app-registration>
-        <app-login (newItemEvent)='disapaierLoginPage($event.value)'></app-login>      
-</ng-template>
-
-<ng-template #appearCanvas>
- <app-canvas ></app-canvas>
-  </ng-template>
-
-
-
+  <nav>
+          <a class="registration" routerLink='/'>Register</a>
+          <a class="login" routerLink='/login'>Login</a>
+          <a  routerLink='/canvas'></a>
+  </nav>
+  <router-outlet></router-outlet>

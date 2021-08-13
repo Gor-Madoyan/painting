@@ -2,25 +2,25 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { AppComponent } from './app.component';
-import { CanvasComponent } from './canvas/canvas.component';
 import { CircleComponent } from './circle/circle.component';
 import {FormsModule} from "@angular/forms";
-import { RegistrationComponent } from './registration/registration.component';
-import { LoginComponent } from './login/login.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { AppRoutingModule, routingComponents } from './app-routing.module';
+
+
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    CanvasComponent,
     CircleComponent,
-    RegistrationComponent,
-    LoginComponent
+    routingComponents
   ],
   imports: [
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
+    AppRoutingModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

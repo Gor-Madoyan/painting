@@ -8,10 +8,25 @@
     cursor: pointer;
     font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
-#registration:active{
-    background-color:rgb(163, 4, 184)
+#egistration:active{
+    background-color:rgb(107, 17, 182)
 }
 .button{
     text-align: center;
     margin:10px;
+}
+
+
+.registration,.login, .canvas{
+    border-radius: 10px;
+    background-color: #6233b9; 
+    border: none;
+    color: white;
+    padding: 15px 15px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }

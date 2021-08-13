@@ -4,9 +4,7 @@ import { confirmValidator } from 'src/ConfirmPassCustomValidation/confirmPassCus
 import { LocalStorageService } from '../services/storage.service';
 import { RegistrationObj } from './registrationClass';
 import { registrationList } from '../interfaces/registration.interface';
-import { Canvas } from '../canvas/canvas.component';
-import { Output, EventEmitter} from '@angular/core';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +14,8 @@ import { Output, EventEmitter} from '@angular/core';
 export class RegistrationComponent implements OnInit {
 
 
-  constructor(private fb:FormBuilder, private storage: LocalStorageService) { }
+  constructor(private fb:FormBuilder, private storage: LocalStorageService,
+   private router: Router) { }
   registrationForm!:any;
   fName:string = '' ;
   lName:string = '' ;
@@ -27,7 +26,7 @@ export class RegistrationComponent implements OnInit {
   objRegistration!:registrationList ;
   arrRegistration:Array<registrationList> = [];
   newProject:any = {};
-  // uniqueProjectArr:any = []
+  
 
 
   ngOnInit(): void {
@@ -70,7 +69,6 @@ export class RegistrationComponent implements OnInit {
   };
 
   storageSetInfo() {
-
       if(this.Email || this.Password) {
         const jsonObj = JSON.stringify(this.arrRegistration);
         this.storage.set('userInfo', jsonObj)
@@ -84,29 +82,14 @@ export class RegistrationComponent implements OnInit {
     }
   };
 
-  creatAccounts() {
-    this.newProject = new Canvas(this.storage, this.Email);
-    // this.uniqueProjectArr.push(this.newProject)
-  };
-
-  // setUniqueProject() {
-  //   this.creatAccounts()
-  //   this.storage.set('userAccounts', JSON.stringify(this.uniqueProjectArr))
-  // };
 
 
-  // clearFilds() {
-  //   this.fName = ' ' ;
-  //   this.lName = ' ' ;
-  //   this.Email = ' ' ;
-  //   this.Password = ' ';
-  // }
   submitBtn() {
     this.creatObj();
     this.storageSetInfo();
-    // this.clearFilds()
-    // this.setUniqueProject();
-    // console.log(this.uniqueProjectArr, 'unique arr registration component');
+    if(this.fName && this.lName && this.email && this.password && this.confirmPassword) {
+      this.router.navigateByUrl('/login'); 
+    }
   }
 
 

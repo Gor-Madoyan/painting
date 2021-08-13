@@ -12,8 +12,5 @@ matchLogin:boolean = true ;
 
 disapaierLoginPage(val:boolean) {
   this.matchLogin = val
-};
-
-
-
+  };
 }
