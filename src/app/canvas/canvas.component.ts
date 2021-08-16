@@ -8,6 +8,7 @@ import { LocalStorageSaveObj } from './circleClass/circle';
 import { AuthenticationService } from '../services/Authentication.sevice';
 import { Router } from '@angular/router';
 import { registrationList } from '../interfaces/registration.interface';
+import { ParseSpan } from '@angular/compiler';
 
 @Component({
   selector: 'app-canvas',
@@ -101,15 +102,21 @@ export class CanvasComponent implements OnInit {
     this.projectList.push(localStorageObj)
   };
 
+
   onSave(): void {
     if (this.isEmpty(this.circles) || !this.projectName) {
       return;
-    };
-    const user = this.authService.getUser();
-    this.creatObject(user.Email)
-    this.storageSet()
-    this.currentUserProject()
-    this.projectName = ''
+    };    
+   const currentProjectName = this.currentUserProjects.some((val)=>{
+      return val.name === this.projectName
+     })
+
+     if(!currentProjectName) {
+      const user = this.authService.getUser();
+      this.creatObject(user.Email)
+      this.storageSet()
+      this.currentUserProject()
+     }    
   };
 
   storageSet() {
