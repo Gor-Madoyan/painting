@@ -1,11 +1,11 @@
 import { Injectable } from '@angular/core';
 import { LocalStorageService } from './storage.service';
-;
+import { ICircle } from '../interfaces/circle.interface';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthenticationService {
 
   constructor(private storage: LocalStorageService) { }
 

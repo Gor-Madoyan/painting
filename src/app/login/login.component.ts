@@ -1,9 +1,9 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { LocalStorageService } from '../services/storage.service';
 import { registrationList } from '../interfaces/registration.interface';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AuthService } from '../services/auth.sevice';
+import { AuthenticationService } from '../services/Authentication.sevice';
 
 
 @Component({
@@ -14,15 +14,18 @@ import { AuthService } from '../services/auth.sevice';
 export class LoginComponent implements OnInit {
 
   constructor(private storage: LocalStorageService,private fb:FormBuilder , 
-   private router:Router, private authService: AuthService
+   private router:Router, private authService: AuthenticationService
     ) { }
 
 
   arrList:Array<registrationList> = [];
   Password:any = '';
   Login:string = ''
-  loginSignUp:any
-  passwordMatch!:boolean 
+  loginSignUp:any;
+  passwordMatch!:boolean ;
+  loginMessage:boolean = false;
+
+ 
 
   ngOnInit(): void {
     this.loginSignUp = this.fb.group({
@@ -31,6 +34,7 @@ export class LoginComponent implements OnInit {
     })
       this.storagetGetInfo();
   };
+
 
   get login() {
     return this.loginSignUp.get('login')
@@ -48,10 +52,10 @@ export class LoginComponent implements OnInit {
   };
 
   getCurrentUser():any {
-    const currentUser = this.arrList.filter(val=>{
-      return (this.Password === val.Password &&  this.Login === val.Email)
+    return this.arrList.filter(val=>{
+        return (this.Password === val.Password &&  this.Login === val.Email)
     });
-    return currentUser
+    
   };
   
   compareLogin() { 
@@ -61,9 +65,10 @@ export class LoginComponent implements OnInit {
       console.log('this password found');
       this.router.navigateByUrl('/canvas') 
      } else {
-       alert('you need registration')
+       this.loginMessage = true
      }
   };
+  
   
   loginBtn() {
     this.storagetGetInfo()

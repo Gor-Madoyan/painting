@@ -5,7 +5,7 @@ import {LocalStorageService} from "../services/storage.service";
 import {IProject} from "../interfaces/project.interface";
 import { Circle } from './circleClass/circle';
 import { LocalStorageSaveObj } from './circleClass/circle';
-import { AuthService } from '../services/auth.sevice';
+import { AuthenticationService } from '../services/Authentication.sevice';
 import { Router } from '@angular/router';
 import { registrationList } from '../interfaces/registration.interface';
 
@@ -19,19 +19,18 @@ export class CanvasComponent implements OnInit {
   projectName: string = '';
   projectList: IProject[] = [];
   projectListName = 'circlesProject';
-  currentUserProjects: IProject[] = [];
-
+  currentUserProjects: IProject[] = [];  
   canvasSizes: number[] = [
     ECircleCount.MIN, // 100
     ECircleCount.MID, // 225
     ECircleCount.MAX, // 400
   ];
-
   selectedSize: number = this.canvasSizes[0];
   currentColor: string = '#000';
   currentUser!: registrationList;
+  
 
-  constructor(protected storage: LocalStorageService, private authService: AuthService,
+  constructor(protected storage: LocalStorageService, private authService: AuthenticationService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -99,7 +98,7 @@ export class CanvasComponent implements OnInit {
     this.projectList.push(localStorageObj)
   };
 
-  onSave(): void {
+  onSave(): void{
     if (this.isEmpty(this.circles) || !this.projectName) {
       return;
     };

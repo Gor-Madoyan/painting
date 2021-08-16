@@ -16,7 +16,9 @@
             <input [(ngModel)]='Password'  formControlName='password' type="text"> 
             <div *ngIf='password.invalid && password.touched'>
                 <small class="errors" *ngIf='password.errors.required'>password is required</small>
-                <small  class="errors" *ngIf='!passwordMatch'>Password doesn't match</small>
+            </div>
+            <div *ngIf='loginMessage'>
+                <small class="loginMessage">You need fill above fields</small>
             </div>
         </div>
         <button (click)="loginBtn()"  class="login">LOGIN</button>

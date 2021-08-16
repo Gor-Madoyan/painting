@@ -63,3 +63,9 @@ input.ng-invalid.ng-touched{
     text-decoration: none;
     color: white;
 }
+
+.loginMessage{
+    color: rgb(255, 0, 0);
+    opacity: 0.8;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
