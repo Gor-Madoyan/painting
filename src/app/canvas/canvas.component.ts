@@ -42,7 +42,7 @@ export class CanvasComponent implements OnInit {
 
   currentUserProject() {
     let circlesProject = this.authService.getcirclesProject();
-    if(circlesProject.length !==0) {
+    if(circlesProject) {
       this.currentUserProjects = circlesProject.filter(val=>{
         return val.email === this.currentUser.Email
       })
