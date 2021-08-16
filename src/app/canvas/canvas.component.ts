@@ -6,6 +6,9 @@ import {IProject} from "../interfaces/project.interface";
 import { Circle } from './circleClass/circle';
 import { LocalStorageSaveObj } from './circleClass/circle';
 import { AuthService } from '../services/auth.sevice';
+import { Router } from '@angular/router';
+import { registrationList } from '../interfaces/registration.interface';
+
 @Component({
   selector: 'app-canvas',
   templateUrl: './canvas.component.html',
@@ -16,6 +19,8 @@ export class CanvasComponent implements OnInit {
   projectName: string = '';
   projectList: IProject[] = [];
   projectListName = 'circlesProject';
+  currentUserProjects: IProject[] = [];
+
   canvasSizes: number[] = [
     ECircleCount.MIN, // 100
     ECircleCount.MID, // 225
@@ -24,37 +29,45 @@ export class CanvasComponent implements OnInit {
 
   selectedSize: number = this.canvasSizes[0];
   currentColor: string = '#000';
+  currentUser!: registrationList;
 
-  constructor(protected storage: LocalStorageService, private authService: AuthService) { }
+  constructor(protected storage: LocalStorageService, private authService: AuthService,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.getProjects();
+    this.currentUser = this.authService.getCurrentUser()
+    this.currentUserProject()
   }
 
+  currentUserProject() {
+    let circlesProject = this.authService.getcirclesProject();
+    this.currentUserProjects = circlesProject.filter(val=>{
+      return val.email === this.currentUser.Email
+    })
+  };
 
   onGenerateCircles(): void {
     this.resetColors()
     console.log('this.circles: ', this.circles.length);
-  }
+  };
 
   onSizeSelect(): void {
     this.circles = []
-  }
-
+  };
 
   onCircleClick(circle: ICircle): void {
-    if(this.circles[circle.id].color === this.currentColor ){
-      this.circles[circle.id].color = "";
-    }else {
-      this.circles[circle.id].color = this.currentColor;
-    }
-  }
+    this.circles[circle.id].color === this.currentColor?
+    this.circles[circle.id].color = "":
+    this.circles[circle.id].color = this.currentColor;
+
+  };
 
   onResetColor(): void {
     if (!this.isEmpty(this.circles)) {
       this.resetColors();
     }
-  }
+  };
 
   resetColors(): void {
     this.circles = [];
@@ -62,7 +75,7 @@ export class CanvasComponent implements OnInit {
       const objCircle = new Circle(i, this.newId(), '')
       this.circles.push(objCircle)
     }
-  }
+  };
 
   onFillCircles(): void {
     if (this.isEmpty(this.circles)) {
@@ -71,74 +84,66 @@ export class CanvasComponent implements OnInit {
     this.circles.forEach((item) => {
       item.color = this.currentColor;
     })
-  }
+  };
 
   isEmpty(arr: ICircle[]): boolean {
     return !arr.length;
-  }
+  };
 
   newId(): string {
     return String(Date.now());
-  }
-
+  };
 
   creatObject(email: any) {
     const localStorageObj = new LocalStorageSaveObj(this.newId(), this.projectName, this.circles, email);
-    debugger 
     this.projectList.push(localStorageObj)
-  }
+  };
+
   onSave(): void {
     if (this.isEmpty(this.circles) || !this.projectName) {
       return;
-    }
-
+    };
     const user = this.authService.getUser();
     this.creatObject(user.Email)
     this.storageSet()
+    this.currentUserProject()
     this.projectName = ''
-  }
-
+  };
 
   storageSet() {
     const projectsStr = JSON.stringify(this.projectList);
     this.storage.set(this.projectListName, projectsStr);
-  }
+  };
 
   getProjects(): void {
     const projects = this.storage.get(this.projectListName);
     if (projects) {
       this.projectList = JSON.parse(projects);
     }
-  }
+  };
 
   selectProject(project: IProject): void {
     this.circles = project.circles;
-    this.selectedSize = project.circles.length
-    console.log(project.circles.length);
-    
+    this.selectedSize = project.circles.length    
   };
 
   onDelet(project:any) {
-  const filteredProjectList = this.projectList.filter((val,i)=>{
+  const filteredProjectList = this.projectList.filter(val=>{
       return val.id !== project.id
   });
   this.projectList = filteredProjectList
   this.storage.set(this.projectListName, JSON.stringify(this.projectList));
+  this.resetColors() 
+  this.currentUserProject()
+  };
 
-  if(this.projectList.length === 0) {
-    this.storage.remove('circlesProject')
+  logOut() {
+    if(this.storage.get('circlesProject')?.length === 0) {
+      this.storage.remove('circlesProject')
+    }
+    this.storage.remove("currentUser");
+    this.router.navigateByUrl("/login")
   }
-    this.resetColors() 
-  }
-
-
 
 }
 
-// export class Canvas extends CanvasComponent {
-//   email:string
-//   constructor(storage:LocalStorageService, email:string) {
-//     super(storage)
-//     this.email = email
-//   }
-// }

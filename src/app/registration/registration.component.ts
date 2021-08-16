@@ -21,19 +21,15 @@ export class RegistrationComponent implements OnInit {
   lName:string = '' ;
   Email:string = '' ;
   Password:any = '';
-
-
   objRegistration!:registrationList ;
-  arrRegistration:Array<registrationList> = [];
-  newProject:any = {};
+  arrRegistration:registrationList[] = [];
   
-
 
   ngOnInit(): void {
     this.registrationForm = this.fb.group({
       firstName: ['', Validators.required],
       lastName: ['', Validators.required],
-      email: ['', [Validators.required]], //, Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")
+      email: ['', [Validators.required,  Validators.pattern("^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$")]],
       password: ['', [Validators.required,  Validators.minLength(3)]], 
       confirmPassword: ['', Validators.required]
     },{validator: confirmValidator('password', 'confirmPassword')});
@@ -69,10 +65,10 @@ export class RegistrationComponent implements OnInit {
   };
 
   storageSetInfo() {
-      if(this.Email || this.Password) {
-        const jsonObj = JSON.stringify(this.arrRegistration);
-        this.storage.set('userInfo', jsonObj)
-      }
+    if(this.Email || this.Password) {
+      const jsonObj = JSON.stringify(this.arrRegistration);
+      this.storage.set('userInfo', jsonObj)
+    }
   };
 
   storagetGetInfo() {
@@ -81,8 +77,6 @@ export class RegistrationComponent implements OnInit {
       this.arrRegistration = JSON.parse(arrjson)
     }
   };
-
-
 
   submitBtn() {
     this.creatObj();

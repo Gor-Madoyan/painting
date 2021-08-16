@@ -1,3 +1,6 @@
+
+<router-outlet></router-outlet>
+
 <div class="login-Container">
     <form class="forGroup" [formGroup] = 'loginSignUp'>
         <label>Login</label>
@@ -7,7 +10,7 @@
                 <small class="errors" *ngIf='login.errors.required'>login is required</small>
             </div>
         </div>
-    
+        
         <label>Password</label>
         <div>
             <input [(ngModel)]='Password'  formControlName='password' type="text"> 
@@ -17,5 +20,8 @@
             </div>
         </div>
         <button (click)="loginBtn()"  class="login">LOGIN</button>
+        <div>
+            <button class="registrationButton" routerLink='/registration'>Register</button>
+        </div>
     </form>
 </div>
