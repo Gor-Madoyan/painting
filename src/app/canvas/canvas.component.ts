@@ -42,9 +42,11 @@ export class CanvasComponent implements OnInit {
 
   currentUserProject() {
     let circlesProject = this.authService.getcirclesProject();
-    this.currentUserProjects = circlesProject.filter(val=>{
-      return val.email === this.currentUser.Email
-    })
+    if(circlesProject.length !==0) {
+      this.currentUserProjects = circlesProject.filter(val=>{
+        return val.email === this.currentUser.Email
+      })
+    }
   };
 
   onGenerateCircles(): void {
